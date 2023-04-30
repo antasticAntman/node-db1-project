@@ -26,7 +26,7 @@ router.get('/:id', checkAccountId, async (req, res, next) => {
 })
 
 router.post('/',
-checkAccountId,
+checkAccountPayload,
 checkAccountNameUnique, 
 async(req, res, next) => {
   // DO YOUR MAGIC
