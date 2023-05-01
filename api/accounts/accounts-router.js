@@ -31,7 +31,11 @@ checkAccountNameUnique,
 async(req, res, next) => {
   // DO YOUR MAGIC
   try {
-    res.json('created a new post')
+    const newAccount = await Account.create({
+      name: req.body.name.trim(),
+      budget: req.body.budget
+    })
+    res.status(201).json(newAccount)
   }
   catch (err) {
     next(err)
@@ -40,22 +44,23 @@ async(req, res, next) => {
 
 router.put('/:id',
 checkAccountId,
-checkAccountNameUnique,
 checkAccountPayload,
- (req, res, next) => {
+ async(req, res, next) => {
   // DO YOUR MAGIC
+  const updated = await Account.updateById(req.params.id, req.body)
   try {
-    res.json('updated new post')
+    res.json(updated)
   }
   catch (err) {
     next(err)
   }
 });
 
-router.delete('/:id',checkAccountId, (req, res, next) => {
+router.delete('/:id',checkAccountId, async(req, res, next) => {
   // DO YOUR MAGIC
   try {
-    res.json('deleted post')
+    await Account.deleteById(req.params.id)
+    res.json(req.account)
   }
   catch (err) {
     next(err)
